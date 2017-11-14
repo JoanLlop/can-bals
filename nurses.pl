@@ -85,8 +85,11 @@ writeClauses:-
 	nurseMax:- nurse(N), hour(SH), type(T), Start is SH+3+T+3, End is SH, hourInRange(Start, End, HNIT), negate(worksNH-N-HNIT, NHNIT), negate(startsNH-N-SH, Stneg), w(Stneg), negate(nurseType-N-T, Tneg), w(Tneg),  writeClause([NHNIT]), fail.
 	nurseMax.
 	
-	nurseInter:- nurse(N), hour(SH), type(T), negate(startsNH-N-SH, Stneg), negate(nurseType-N-T, Tneg), Start is SH+3, End is Start + T, hourInRange(Start, End, HI), negate(worksNH-N-HI, NWHI),w(Stneg), w(Tneg), writeClause([NWHI]), fail.
+	nurseInter:- nurse(N), hour(SH), type(T), negate(startsNH-N-SH, Stneg), negate(nurseType-N-T, Tneg), StartA is SH+3, EndA is StartA + T, converts(StartA, Start), converts(EndA, End), hourInRange(Start, End, HI), negate(worksNH-N-HI, NWHI),w(Stneg), w(Tneg), writeClause([NWHI]), fail.
 	nurseInter.
+
+	converts(A, B):- A >= 24, B is A-24, !.
+	converts(A, A).
 
 
 
